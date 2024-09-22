@@ -1,4 +1,4 @@
-class Driver
+public class Driver
 {
     private String name;
     private double area;

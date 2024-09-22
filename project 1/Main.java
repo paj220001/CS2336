@@ -23,7 +23,7 @@ public class Main
         //create scanner to read from the file 
         Scanner fileReader = new Scanner(new File(inputFileName));
         readFile(fileReader, list);
-        list.toStringy();
+        list.toString();
 
         System.out.print("Please enter the command file name: ");
         commandFileName = input.nextLine();
@@ -31,9 +31,9 @@ public class Main
         Scanner commands = new Scanner(new File(commandFileName));
         readCommandFile(commands, list);
 
-        Driver.setComparison("driver");
+        Driver.setComparison("area");
         list.sort();
-        list.toStringy();
+        list.toString();
         
         input.close();
         commands.close();

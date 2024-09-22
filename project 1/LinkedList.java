@@ -29,7 +29,7 @@ public class LinkedList
         
     }
 
-    public void toStringy()
+    public String toString()
     {
         Node currentNode = head;
         while(currentNode != null)
@@ -38,6 +38,7 @@ public class LinkedList
             System.out.println(line);
             currentNode = currentNode.getNextDriver();
         }
+        return "Done";
     }
 
     public String search(String searchFor)
@@ -63,17 +64,19 @@ public class LinkedList
 
     public void sort()
     {
-        Node currentNode = head;
+        Node currentNode, nextNode, previousNode;
         int compareInt;
         int i = 0;
         boolean swap;
         
         while(i < count)
         {
-            Node nextNode = head;
+            currentNode = head;
+            nextNode = head;
+            previousNode = head;
             swap = false;
         
-            while(currentNode != null)
+            while(currentNode.getNextDriver() != null)
             {
                 nextNode = currentNode.getNextDriver();
                 compareInt = currentNode.getDriver().compareTo(nextNode.getDriver());
@@ -81,23 +84,33 @@ public class LinkedList
                 {
                     if(currentNode == head)
                     {
-                        currentNode.setNext(nextNode.getNextDriver());
                         head = nextNode;
+                        currentNode.setNext(nextNode.getNextDriver());
+                        nextNode.setNext(currentNode);
+                        previousNode = head;
                     }
                     else
                     {
+                        previousNode.setNext(nextNode);
                         currentNode.setNext(nextNode.getNextDriver());
                         nextNode.setNext(currentNode);
+                        
                     }
                     swap = true;
                 }
+                previousNode = currentNode;
                 currentNode = currentNode.getNextDriver();
+                
+                if(currentNode == null)
+                {
+                    break;
+                }
 
             }
-            if(!swap)
-            {
+            
+            if(swap == false)
                 break;
-            }
+
             i++;
         }
     }
