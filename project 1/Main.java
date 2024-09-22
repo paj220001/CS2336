@@ -31,8 +31,6 @@ public class Main
         Scanner commands = new Scanner(new File(commandFileName));
         readCommandFile(commands, list);
 
-        Driver.setComparison("area");
-        list.sort();
         list.toString();
         
         input.close();
@@ -46,22 +44,29 @@ public class Main
         String driver;
         while(scanner.hasNext())
         {
-            line = scanner.nextLine();
-
-            if(line.compareTo("") == 0)
+            try
             {
-                break;
+                line = scanner.nextLine();
+
+                if(line.compareTo("") == 0)
+                {
+                    break;
+                }
+
+                int index = line.indexOf(' ');
+
+                //seperate everything before the space into the drivers array
+                driver = line.substring(0, index); 
+
+                //everything after the space is left in the line array 
+                line = line.substring(index + 1); 
+                
+                storeArea(driver, line, list);
             }
-
-            int index = line.indexOf(' ');
-
-            //seperate everything before the space into the drivers array
-            driver = line.substring(0, index); 
-
-            //everything after the space is left in the line array 
-            line = line.substring(index + 1); 
-            
-            storeArea(driver, line, list);
+            catch(Exception e)
+            {
+                line = null;
+            }
         }
     }
 
@@ -124,9 +129,21 @@ public class Main
         while(scanner.hasNext())
         {
             command = scanner.nextLine();
-            result = list.search(command);
-
-            System.out.println(result);
+            if(command.equals("sort area"))
+            {
+                Driver.setComparison("area");
+                list.sort();
+            }
+            else if(command.equals("sort driver"))
+            {
+                Driver.setComparison("driver");
+                list.sort();
+            }
+            else
+            {
+                result = list.search(command);
+                System.out.println(result);
+            }
 
         }
     }
