@@ -75,6 +75,26 @@ public class Number implements Comparable<Number>
         return answer;
     }
 
+    public String div(Number o)
+    {
+        if(o instanceof Complex)
+        {
+            Complex c = (Complex) o;
+            double denominator = c.getNum() * c.getNum() + c.getImaginary() * c.getImaginary();
+            double real = (this.num * c.getNum()) / denominator;
+            double imag = (-this.num * c.getImaginary()) / denominator;
+
+            c.setNum(real);
+            c.setImaginary(imag);
+            return c.toString();
+        }
+        else
+        {
+            this.num = this.num / o.getNum();
+            return toString();
+        }
+    }
+
     @Override
     public int compareTo(Number o)
     {

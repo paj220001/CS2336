@@ -71,9 +71,35 @@ public class Complex extends Number
         return toString();
     }
 
+    @Override
+    public String div(Number o)
+    {
+        if(o instanceof Complex)
+        {
+            Complex c = (Complex) o;
+
+            double denominator = c.getNum() * c.getNum() + c.getImaginary() * c.getImaginary();
+            double real = (this.getNum() * c.getNum() + this.getImaginary() * c.getImaginary()) / denominator;
+            double imag = (this.getImaginary() * c.getNum() - this.getNum() * c.getImaginary()) / denominator;
+
+            this.setNum(real);
+            this.imaginaryNumber = imag;
+
+            return toString();
+
+        }
+        else
+        {
+            this.setNum(this.getNum() / o.getNum());
+            this.imaginaryNumber = this.imaginaryNumber / o.getNum();
+            return toString();
+        }
+    }
+
     /*@Override
     public int compareTo(Number o)
     {
+        
         double magnitudeOrg, magnitudeCompare;
         magnitudeOrg = Math.sqrt((this.getNum() * this.getNum()) + (this.imaginaryNumber * this.imaginaryNumber));
         magnitudeCompare = Math.sqrt((o.getNum() * o.getNum()) + (o.getImaginary() * o.getImaginary()));

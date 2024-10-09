@@ -178,7 +178,7 @@ public class Main
                 answer = num1.mult(num2);
                 break;
             case "/":
-                //answer = num1.div(num2);
+                answer = num1.div(num2);
                 break;
         }
 
