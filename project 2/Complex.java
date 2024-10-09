@@ -1,4 +1,4 @@
-public class Complex extends Number// implements Comparable<Complex>
+public class Complex extends Number
 {
     private double imaginaryNumber;
 
@@ -30,7 +30,7 @@ public class Complex extends Number// implements Comparable<Complex>
             this.setNum(realSum += o.getNum());
             this.setImaginary(imagSum += ((Complex)o).getImaginary());
         } else if (o instanceof Number) {
-            this.setNum(realSum += o.getNum());  
+            o.add(this); 
         }
 
         return toString();
@@ -47,16 +47,37 @@ public class Complex extends Number// implements Comparable<Complex>
             this.setNum(realSum -= o.getNum());
             this.setImaginary(imagSum -= ((Complex)o).getImaginary());
         } else if (o instanceof Number) {
-            this.setNum(realSum -= o.getNum());  
+            o.sub(this); 
+        }
+
+        return toString();
+    }
+
+    @Override 
+    public String mult(Number o)
+    {
+        if(o instanceof Complex)
+        {
+            double ogReal = this.getNum();
+            double ogImag = this.imaginaryNumber;
+            this.setNum(ogReal * o.getNum() - ogImag * ((Complex) o).getImaginary());
+            this.imaginaryNumber = ogReal * ((Complex) o).imaginaryNumber + ogImag * o.getNum();
+        }
+        else
+        {
+            o.mult(this);
         }
 
         return toString();
     }
 
     /*@Override
-    public int compareTo(Complex o)
+    public int compareTo(Number o)
     {
-        double magnitude;
+        double magnitudeOrg, magnitudeCompare;
+        magnitudeOrg = Math.sqrt((this.getNum() * this.getNum()) + (this.imaginaryNumber * this.imaginaryNumber));
+        magnitudeCompare = Math.sqrt((o.getNum() * o.getNum()) + (o.getImaginary() * o.getImaginary()));
+
     }*/
 
     @Override

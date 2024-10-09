@@ -1,4 +1,4 @@
-public class Number //implements Comparable<Number>
+public class Number implements Comparable<Number>
 {
     private double num;
 
@@ -75,7 +75,7 @@ public class Number //implements Comparable<Number>
         return answer;
     }
 
-    /*@Override
+    @Override
     public int compareTo(Number o)
     {
         if(this.num > o.getNum())
@@ -90,7 +90,8 @@ public class Number //implements Comparable<Number>
         {
             return 0;
         }
-    }*/
+    }
+    
 
     @Override
     public String toString()
