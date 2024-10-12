@@ -96,15 +96,59 @@ public class Complex extends Number
         }
     }
 
-    /*@Override
+    @Override
     public int compareTo(Number o)
     {
-        
-        double magnitudeOrg, magnitudeCompare;
-        magnitudeOrg = Math.sqrt((this.getNum() * this.getNum()) + (this.imaginaryNumber * this.imaginaryNumber));
-        magnitudeCompare = Math.sqrt((o.getNum() * o.getNum()) + (o.getImaginary() * o.getImaginary()));
+        if(o instanceof Complex)
+        {
+            double magnitudeOrg, magnitudeCompare;
+            magnitudeOrg = Math.sqrt((this.getNum() * this.getNum()) + (this.imaginaryNumber * this.imaginaryNumber));
+            magnitudeCompare = Math.sqrt((o.getNum() * o.getNum()) + (((Complex) o).getImaginary() * ((Complex) o).getImaginary()));
 
-    }*/
+            if(magnitudeOrg > magnitudeCompare)
+            {
+                return 1;
+            }
+            else if(magnitudeOrg < magnitudeCompare)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        else
+        {
+            return -o.compareTo(this);
+        }
+    }
+
+    @Override 
+    public boolean equals(Object o)
+    {
+        boolean value = false;
+        if(o instanceof Complex)
+        {
+            double magnitudeOrg, magnitudeCompare;
+            magnitudeOrg = Math.sqrt((this.getNum() * this.getNum()) + (this.imaginaryNumber * this.imaginaryNumber));
+            magnitudeCompare = Math.sqrt((((Number) o).getNum() * ((Number) o).getNum()) + (((Complex) o).getImaginary() * ((Complex) o).getImaginary()));
+            if(magnitudeOrg == magnitudeCompare)
+            {
+                value = true;
+            }
+            else
+            {
+                value = false;
+            }
+        }
+        else 
+        {
+            value = ((Number)o).equals(this);
+        }
+
+        return value;
+    }
 
     @Override
     public String toString()

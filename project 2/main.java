@@ -166,6 +166,7 @@ public class Main
     public static void operation( Number num1, String symbol, Number num2)
     {
         String answer = "";
+        int num = 0;
         switch(symbol)
         {
             case "+":
@@ -179,6 +180,39 @@ public class Main
                 break;
             case "/":
                 answer = num1.div(num2);
+                break;
+            case "<":
+                num = num1.compareTo(num2);
+                if(num < 0)
+                {
+                    answer = "True";
+                }
+                else
+                {
+                    answer = "False";
+                }
+                break;
+            case ">":
+                num = num1.compareTo(num2);
+                if(num > 0)
+                {
+                    answer = "True";
+                }
+                else 
+                {
+                    answer = "False";
+                }
+                break;
+            case "=":
+                boolean value = num1.equals(num2);
+                if(value)
+                {
+                    answer = "True";
+                }
+                else
+                {
+                    answer = "False";
+                } 
                 break;
         }
 

@@ -98,21 +98,65 @@ public class Number implements Comparable<Number>
     @Override
     public int compareTo(Number o)
     {
-        if(this.num > o.getNum())
+        if(o instanceof Complex)
         {
-            return 1;
-        }
-        else if(this.num < o.getNum())
-        {
-            return -1;
+            double magnitudeCompare = Math.sqrt((o.getNum() * o.getNum()) + ((Complex) o).getImaginary() * ((Complex) o).getImaginary());
+            if(Math.abs(this.num) > magnitudeCompare)
+            {
+                return 1;
+            }
+            else if(Math.abs(this.num) < magnitudeCompare)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
         }
         else
         {
-            return 0;
+            if(this.num > o.getNum())
+            {
+                return 1;
+            }
+            else if(this.num < o.getNum())
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
-    
 
+    @Override
+    public boolean equals(Object o)
+    {
+        boolean value = false;
+        if(o instanceof Complex)
+        {
+            if(((Complex) o).getImaginary() == 0)
+            {
+                double magnitudeCompare = Math.sqrt(((Number) o).getNum() * ((Number) o).getNum());
+                if(Math.abs(this.num) == magnitudeCompare)
+                {
+                    value = true;
+                }
+            }
+        }
+        else
+        {
+            if(this.num == ((Number) o).getNum())
+            {
+                value = true;
+            }
+        }
+
+        return value;
+    }
+    
     @Override
     public String toString()
     {
