@@ -45,48 +45,74 @@ public class Main
         {
             case 1:
                 line = line.substring(1);
-                Game game = addNode(line);
-                tree.insert(game);
+                addNode(line, tree);
                 break;
             case 2:
-                System.out.println(line);
-                break;
+                 search(line, tree);
+                 break;
             case 3:
                 break;
-            case 4:
+            case 4: 
                 break;
             case 5:
+                tree.Sort();
                 break;
         }
     }
 
-    public static Game addNode(String line)
+    public static void search(String line, BinTree<Game> tree)
+    {
+        Game searchGame = new Game();
+        searchGame.setName(line);
+        searchGame = tree.search(searchGame);
+        if(searchGame != null)
+        {
+            System.out.println(line + " FOUND");
+            System.out.println("High Score: " + searchGame.getHighScore());
+            System.out.println("Initials: " + searchGame.getInitals());
+            System.out.println("Plays: " + searchGame.getPlays());
+            System.out.println("Revenue: " + searchGame.getRevenue() + "\n");
+        }
+        else
+        {
+            System.out.println(line + " NOT FOUND");
+        }
+    }
+
+    public static void addNode(String line, BinTree<Game> tree)
     {
         int index, highScore, plays;
-        String name, initials;
+        String name, initials, rev;
         double revenue;
+
+        System.out.println("RECORD ADDED");
 
         index = line.indexOf("\"");
         name = line.substring(0, index);
+        System.out.println("Name: " + name);
 
         line = line.substring(index + 2);
         index = line.indexOf(' ');
-
         highScore = Integer.parseInt(line.substring(0, index));
+        System.out.println("High Score: " + highScore);
 
         line = line.substring(index + 1);
         index = line.indexOf(' ');
         initials = line.substring(0, index);
+        System.out.println("Initials: " + initials);
         
         line = line.substring(index + 1);
         index = line.indexOf(' ');
         plays = Integer.parseInt(line.substring(0, index));
+        System.out.println("Plays: " + plays);
         
         line = line.substring(index + 1);
         index = line.indexOf('$');
         revenue = Double.parseDouble(line.substring(index + 1));
+        rev = String.format("%.2f", revenue);
+        System.out.println("Revenue: $" + rev + "\n");
 
         Game game = new Game(name, highScore, initials, plays, revenue);
-        return game;
+        tree.insert(game);
     }
 }

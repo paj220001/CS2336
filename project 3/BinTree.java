@@ -7,16 +7,17 @@ public class BinTree<g extends Comparable<g>>
         root = null;
     }
 
-    public Node<g> insert(g data)
+    public g insert(g data)
     {
         if(root == null)
         {
             root = new Node<>();
             root.setData(data);
             //System.out.println(root);
-            return root;
+            return root.getData();
         }
-        return insertRec(root, data);
+        Node<g> insertNode = insertRec(root, data);
+        return insertNode.getData();
     }
 
     private Node<g> insertRec(Node<g> current, g data)
@@ -40,25 +41,37 @@ public class BinTree<g extends Comparable<g>>
         return current;
     }
 
-    public Node<g> search(g line)
+    public g search(g line)
     {
-        return searchRec(root, line);
+        try
+        {
+            Node<g> search = searchRec(root, line);
+            if(line.compareTo(search.getData()) != 0)
+            {
+                return null;
+            }
+            
+            return search.getData();
+        }
+        catch(NullPointerException e)
+        {
+            return null;
+        }
     }
 
     private Node<g> searchRec(Node<g> current, g line)
     {
-        
         if(line.compareTo(current.getData()) == 0)
         {
             return current;
         }
         else if(line.compareTo(current.getData()) < 0)
         {
-            current.setLeftPtr(searchRec(current.getLeftPtr(), line));
+            current = searchRec(current.getLeftPtr(), line);
         }
         else
         {
-            current.setRightPtr(insertRec(current.getRightPtr(), line));
+            current = searchRec(current.getRightPtr(), line);
         }
 
         return current;
@@ -70,7 +83,7 @@ public class BinTree<g extends Comparable<g>>
         {
             return;
         }
-
+        System.out.println("RECORDS SORTED ASCENDING");
         inorder(root);
     }
 

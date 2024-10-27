@@ -32,7 +32,7 @@ public class Game implements Comparable<Game>
         this.name = name;
     }
 
-    public double getHighScore() {
+    public int getHighScore() {
         return highScore;
     }
 
@@ -59,7 +59,8 @@ public class Game implements Comparable<Game>
     @Override
     public String toString()
     {
-        String line = name + " " + highScore + " " + initials + " " + plays;
+        String rev = String.format("%.2f", revenue);
+        String line = name + ", " + highScore + ", " + initials + ", " + plays + ", " + "$" + rev;
         return line;
     }
 
@@ -69,8 +70,9 @@ public class Game implements Comparable<Game>
         return this.name.compareTo(game.getName());
     }
 
-    public double getRevenue() {
-        return revenue;
+    public String getRevenue() {
+        String rev = String.format("%.2f", revenue);
+        return rev;
     }
 
     public void setRevenue(double revenue) {
