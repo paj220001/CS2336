@@ -37,6 +37,10 @@ public class BinTree<g extends Comparable<g>>
         {
             current.setRightPtr(insertRec(current.getRightPtr(), data));
         }
+        else if(data.compareTo(current.getData()) == 0)
+        {
+            current.setData(data);
+        }
 
         return current;
     }
@@ -74,6 +78,7 @@ public class BinTree<g extends Comparable<g>>
             current = searchRec(current.getRightPtr(), line);
         }
 
+        
         return current;
     }
 

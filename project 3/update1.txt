@@ -1,4 +1,4 @@
-1 "Centipede" 5550000 DKV 50 $12.50
+1 "Galaga" 5550000 DKV 50 $12.50
 1 "Mousetrap" 895230 WJS 12 $3.00
 2 Donkey Kong
 1 "Defender" 750245000 LEH 100 $25.00

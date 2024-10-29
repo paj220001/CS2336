@@ -3,6 +3,7 @@ import java.io.*;
 import java.util.Scanner;
 public class Main
 {
+    @SuppressWarnings("ConvertToTryWithResources")
     public static void main(String [] args)
     {
         String fileName;
@@ -15,6 +16,7 @@ public class Main
         try
         {
             Scanner dtbScnr = new Scanner(new File(fileName));
+            readDatabase(dtbScnr, tree);
             System.out.print("Plese enter the name of the update File: ");
             fileName = scnr.nextLine();
             Scanner upScnr = new Scanner(new File(fileName));
@@ -25,21 +27,55 @@ public class Main
                 update(line, tree);
             }
 
+            upScnr.close();
+
         }
         catch(FileNotFoundException e)
         {
             System.out.println(fileName + " was not found.");
         }
 
+        scnr.close();
     
+    }
+
+    public static void readDatabase(Scanner scnr, BinTree<Game> tree)
+    {
+        while(scnr.hasNext())
+        {
+            int index, highScore, plays;
+            String name, initials, line;
+            double revenue;
+
+            line = scnr.nextLine();
+            index = line.indexOf(",");
+            name = line.substring(0, index);
+            line = line.substring(index + 2);
+
+            index = line.indexOf(',');
+            highScore = Integer.parseInt(line.substring(0, index));
+            line = line.substring(index + 2);
+
+            index = line.indexOf(',');
+            initials = line.substring(0, index);
+            line = line.substring(index + 2);
+
+            index = line.indexOf(',');
+            plays = Integer.parseInt(line.substring(0, index));
+            line = line.substring(index + 2);
+
+            index = line.indexOf('$');
+            revenue = Double.parseDouble(line.substring(index + 1));
+            Game game = new Game(name, highScore, initials, plays, revenue);
+            tree.insert(game);
+        }
     }
 
     public static void update(String line, BinTree<Game> tree)
     {
         int instruction = Integer.parseInt(line.substring(0, 1));
-        //System.out.println(instruction);
         line = line.substring(2);
-        //System.out.println(line);
+    
 
         switch(instruction)
         {
@@ -51,11 +87,12 @@ public class Main
                  search(line, tree);
                  break;
             case 3:
+                
                 break;
             case 4: 
                 break;
             case 5:
-                tree.Sort();
+                tree.Sort();   
                 break;
         }
     }
@@ -67,11 +104,7 @@ public class Main
         searchGame = tree.search(searchGame);
         if(searchGame != null)
         {
-            System.out.println(line + " FOUND");
-            System.out.println("High Score: " + searchGame.getHighScore());
-            System.out.println("Initials: " + searchGame.getInitals());
-            System.out.println("Plays: " + searchGame.getPlays());
-            System.out.println("Revenue: " + searchGame.getRevenue() + "\n");
+           printGame(searchGame, line);
         }
         else
         {
@@ -114,5 +147,14 @@ public class Main
 
         Game game = new Game(name, highScore, initials, plays, revenue);
         tree.insert(game);
+    }
+
+    public static void printGame(Game searchGame, String line)
+    {
+        System.out.println(line + " FOUND");
+        System.out.println("High Score: " + searchGame.getHighScore());
+        System.out.println("Initials: " + searchGame.getInitals());
+        System.out.println("Plays: " + searchGame.getPlays());
+        System.out.println("Revenue: $" + searchGame.getRevenue() + "\n");
     }
 }
