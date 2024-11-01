@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class BinTree<g extends Comparable<g>>
 {
     private Node<g> root;
@@ -82,6 +84,91 @@ public class BinTree<g extends Comparable<g>>
         return current;
     }
 
+    public g delete(g line)
+    {
+        Node<g> cur = root, parent = root, result;
+
+        while(cur != null)
+        {
+            if(line.compareTo(cur.getData()) < 0)
+            {
+                parent = cur;
+                cur = cur.getLeftPtr();
+            }
+            else if(line.compareTo(cur.getData()) > 0)
+            {
+                parent = cur;
+                cur = cur.getRightPtr();
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        result = deleteRec(cur, parent);
+        return result.getData();
+        
+    }
+
+    private Node<g> deleteRec(Node<g> cur, Node<g> parent)
+    {
+
+        if(cur != null)
+        {
+            if(cur.getLeftPtr() == null && cur.getRightPtr() == null)
+            {
+                if(parent.getLeftPtr() == cur)
+                {
+                    parent.setLeftPtr(null);
+                }
+                else
+                {
+                    parent.setRightPtr(null);
+                }
+            }
+            else if(cur.getLeftPtr() == null)
+            {
+                if(parent.getLeftPtr() == cur)
+                {
+                    parent.setLeftPtr(cur.getRightPtr());
+                }
+                else
+                {
+                    parent.setRightPtr(cur.getRightPtr());
+                }
+            }
+            else if(cur.getRightPtr() == null)
+            {
+                if(parent.getRightPtr() == cur)
+                {
+                    parent.setRightPtr(cur.getLeftPtr());
+                }
+                else
+                {
+                    parent.setLeftPtr(cur.getLeftPtr());
+                }
+            }
+            else
+            {
+                parent = cur;
+
+                cur = cur.getLeftPtr();
+
+                while(cur.getRightPtr() != null)
+                {
+                    cur = cur.getRightPtr();
+                }
+
+                parent.setData(cur.getData());
+
+                deleteRec(cur, parent);
+            }
+        }
+
+        return cur;
+    }
+
     public void Sort()
     {
         if(root == null)
@@ -101,9 +188,52 @@ public class BinTree<g extends Comparable<g>>
 
         inorder(current.getLeftPtr());
 
-        System.out.println(current.getData());
+        System.out.print(current.getData());
 
         inorder(current.getRightPtr());
     }
 
+    public int depth()
+    {
+        return depthRec(root);
+    }
+
+    private int depthRec(Node<g> cur)
+    {
+        if(cur == null)
+        {
+            return 0;
+        }
+        int leftDepth = depthRec(cur.getLeftPtr());
+        int rightDepth = depthRec(cur.getRightPtr());
+
+        return Math.max(leftDepth, rightDepth) + 1;
+    }
+
+    public String breadthTraverse()
+    {
+        Queue<Node<g>> queue = new LinkedList<>();
+        queue.add(root);
+
+        String line = "";
+
+        while(!queue.isEmpty())
+        {
+            Node<g> cur = queue.poll();
+            line += cur.toString();
+
+            if(cur.getLeftPtr() != null)
+            {
+                queue.add(cur.getLeftPtr());
+            }
+
+            if(cur.getRightPtr() != null)
+            {
+                queue.add(cur.getRightPtr());
+            }
+        }
+
+        return line;
+    }
+    
 }

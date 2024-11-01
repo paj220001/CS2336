@@ -54,13 +54,14 @@ public class Game implements Comparable<Game>
 
     public void setPlays(int plays) {
         this.plays = plays;
+        this.revenue = this.plays * 0.25;
     }
 
     @Override
     public String toString()
     {
         String rev = String.format("%.2f", revenue);
-        String line = name + ", " + highScore + ", " + initials + ", " + plays + ", " + "$" + rev;
+        String line = name + ", " + highScore + ", " + initials + ", " + plays + ", " + "$" + rev + "\n";
         return line;
     }
 

@@ -1,6 +1,6 @@
 // Pranav Joseph paj220001
 import java.io.*;
-import java.util.Scanner;
+import java.util.*;
 public class Main
 {
     @SuppressWarnings("ConvertToTryWithResources")
@@ -27,10 +27,17 @@ public class Main
                 update(line, tree);
             }
 
+            PrintWriter output = new PrintWriter("cidercade.dat");
+            
+            output.print(tree.breadthTraverse());
+            
+            scnr.close();
+            dtbScnr.close();
             upScnr.close();
+            output.close();
 
         }
-        catch(FileNotFoundException e)
+        catch(IOException e)
         {
             System.out.println(fileName + " was not found.");
         }
@@ -87,9 +94,12 @@ public class Main
                  search(line, tree);
                  break;
             case 3:
-                
+                edit(line, tree);
                 break;
             case 4: 
+                Game game = new Game();
+                game.setName(line);
+                tree.delete(game);
                 break;
             case 5:
                 tree.Sort();   
@@ -104,7 +114,8 @@ public class Main
         searchGame = tree.search(searchGame);
         if(searchGame != null)
         {
-           printGame(searchGame, line);
+            System.out.println(line + " FOUND");
+            printGame(searchGame);
         }
         else
         {
@@ -149,12 +160,54 @@ public class Main
         tree.insert(game);
     }
 
-    public static void printGame(Game searchGame, String line)
+    public static void printGame(Game searchGame)
     {
-        System.out.println(line + " FOUND");
         System.out.println("High Score: " + searchGame.getHighScore());
         System.out.println("Initials: " + searchGame.getInitals());
         System.out.println("Plays: " + searchGame.getPlays());
         System.out.println("Revenue: $" + searchGame.getRevenue() + "\n");
     }
+
+    public static void edit(String line, BinTree<Game> tree)
+    {
+        String name;
+        int index, instruction;
+        index = line.indexOf("\"");
+        line = line.substring(index + 1);
+
+        index = line.indexOf("\"");
+        name = line.substring(0, index);
+
+        line = line.substring(index + 2);
+        index = line.indexOf(" ");
+        instruction = Integer.parseInt(line.substring(0, index));
+
+        line = line.substring(index + 1);
+
+        Game searchGame = new Game();
+        searchGame.setName(name);
+
+        searchGame = tree.search(searchGame);
+        System.out.println(name + " UPDATED");
+        switch(instruction)
+        {
+            case 1:
+                System.out.println("UPDATE TO HIGHSCORE - " + line);
+                int hightScore = Integer.parseInt(line);
+                searchGame.setHighScore(hightScore);
+                break;
+            case 2:
+                System.out.println("UPDATE TO INITIALS - " + line);
+                searchGame.setInitals(line);
+                break;
+            case 3:
+                System.out.println("UPDATE TO PLAYS - " + line);
+                int plays = Integer.parseInt(line);
+                searchGame.setPlays(plays);
+                break;
+        }
+        printGame(searchGame);
+        tree.insert(searchGame);
+    }
+
 }
