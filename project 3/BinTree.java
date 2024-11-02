@@ -2,17 +2,21 @@ import java.util.*;
 
 public class BinTree<g extends Comparable<g>>
 {
+    //private node to hold root
     private Node<g> root;
 
+    //defaul constructer sets root ot null
     public BinTree()
     {
         root = null;
     }
 
+    //funcrion to insert a game object to tree
     public g insert(g data)
     {
-        if(root == null)
+        if(root == null)//if tree is empty
         {
+            //create new node object
             root = new Node<>();
             root.setData(data);
             //System.out.println(root);
